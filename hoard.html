@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Найди клад!</title>
+</head>
+<body>
+	<h1 id="header">Найди клад!</h1>
+	<img id="map" width=400 height=400 
+		 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQop5vkKh3jAiljOKgRX_4y5fDvyzYr1Q3wjpvsA1823mV03AlQ">
+	<p id="distance"></p>
+	<script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+	<script>
+		var clicks = 0;
+		function getRandomNumber(size) {
+			return Math.floor(Math.random()*size)
+		};
+		var width = 400;
+		var height = 400;
+		var target = {
+			x : getRandomNumber(width),
+			y : getRandomNumber(height)
+		};
+
+		function getDistance(event, target) {
+			var diffX = event.offsetX - target.x;
+			var diffY = event.offsetY - target.y;
+			return Math.sqrt((diffX * diffX) + (diffY * diffY));
+		}
+		function getDistanceHint(distance) {
+			if (distance < 10) {
+				return "Жарко жарко жарко";
+			} else if (distance < 20) {
+				return "Очень горячо";
+			} else if (distance < 40) {
+				return "Горячо";
+			} else if (distance < 80) {
+				return "Тепло";
+			} else if (distance < 160) {
+				return "Холодно";
+			} else if (distance < 320) {
+				return "Холодно";
+			} else {
+				return "Замерзнешь";
+			}
+		};
+		$("#map").click(function(event) {
+			++clicks;
+			var distance = getDistance(event, target);
+			var distanceHint = getDistanceHint(distance);
+			$("#distance").text(distanceHint);
+			if (distance < 8) {
+				alert("Клад найден! Сделано кликов: " + clicks);
+			}
+		});
+	</script>
+</body>
+</html>
